@@ -10,4 +10,22 @@ router.post('/api/workouts', ({ body }, res) => {
 })
 .catch((message) => {
     console.error(message);
-})});
+});
+});
+
+router.put('/api/workouts/:id', ({ params, body }, res) =>{
+    console.log('PARAMS', body, params);
+
+    Workout.findOneAndUpdate(
+        { _id: params.id },
+        {$push: { exercises: body }},
+        { new: true}
+    )
+
+    .then((dbWorkout) => {
+        res.json(dbWorkout);
+      })
+      .catch((err) => {
+        res.json(err);
+      })
+});
